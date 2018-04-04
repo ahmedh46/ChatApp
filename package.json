@@ -1,0 +1,24 @@
+{
+  "name": "chatapp",
+  "version": "1.0.0",
+  "description": "Chat App using Node.js, Socket.IO and MongoDB",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ahmedfaisal46/ChatApp.git"
+  },
+  "author": "Ahmed Faisal",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ahmedfaisal46/ChatApp/issues"
+  },
+  "homepage": "https://github.com/ahmedfaisal46/ChatApp#readme",
+  "dependencies": {
+    "mongo": "^0.1.0",
+    "mongodb": "^2.2.33",
+    "socket.io": "^2.1.0"
+  }
+}
