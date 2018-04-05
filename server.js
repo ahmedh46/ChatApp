@@ -14,7 +14,7 @@ mongo.connect('mongodb://127.0.0.1/mongochat', function(err, db){
         console.log(err);
     }
 
-    console.log('MongoDB connected...');
+    console.log('MongoDB connected');
 
     // Connect to Socket.io
     client.on('connection', function(socket){
@@ -43,12 +43,11 @@ mongo.connect('mongodb://127.0.0.1/mongochat', function(err, db){
             
         });
 
-        // Handle clear
+        // Listen for clear
         socket.on('clear', function(data){
             // Remove all chats from collection
             chat.remove({}, function(){
-                // Emit cleared
-                socket.emit('cleared');
+               
             });
         });
     });
@@ -56,7 +55,7 @@ mongo.connect('mongodb://127.0.0.1/mongochat', function(err, db){
 
 app.set('port', 3000);
 
-//deals with any forms that are posted
+
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: false }));
 
@@ -97,6 +96,11 @@ app.all('/images/background1.jpg', function(req,res)
 app.all('/images/favicon.ico', function(req,res) 
 {
     res.sendFile(__dirname + '/public/images/favicon.ico');
+});
+
+app.all('/images/neptune.png', function(req,res) 
+{
+    res.sendFile(__dirname + '/public/images/neptune.png');
 });
 
 app.all('/scripts/chat.js', function(req,res) 

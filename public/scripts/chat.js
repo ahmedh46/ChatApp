@@ -30,14 +30,29 @@
         window.location.replace("http://localhost:3000/");
        }
       
-      loggedInUserSection.innerHTML = "Welcome! " + splitUrlName[1];
+      loggedInUserSection.innerHTML = "<b>Welcome, " + splitUrlName[1] + "</b>";
+
+        document.onkeydown = function (e) {
+        if(e.which === 13 && e.shiftKey == false){
+            if(inputMessages.value.trim()) {
+                socket.emit('input', {
+                    name: splitUrlName[1],
+                    message:inputMessages.value
+                });
+            inputMessages.value = "";
+            event.preventDefault();
+        }
+    }};
 
         sendButton.addEventListener('click',function(event) {
+            if(inputMessages.value.trim()) {
             socket.emit('input', {
                 name: splitUrlName[1],
                 message:inputMessages.value
             });
+            inputMessages.value = "";
             event.preventDefault();
+        }
         });
 
         if(splitUrlName[1] == "admin9999") {
