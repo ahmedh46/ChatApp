@@ -20,11 +20,6 @@ mongo.connect('mongodb://127.0.0.1/mongochat', function(err, db){
     client.on('connection', function(socket){
         let chat = db.collection('chats');
 
-        // Create function to send status
-        sendStatus = function(s){
-            socket.emit('status', s);
-        }
-
         // Get chats from mongo collection
         chat.find().limit(100).sort({_id:1}).toArray(function(err, res){
             if(err){
@@ -44,11 +39,6 @@ mongo.connect('mongodb://127.0.0.1/mongochat', function(err, db){
                 chat.insert({name: actualName, message: message}, function(){
                     client.emit('output', [data]);
 
-                    // Send status object
-                    sendStatus({
-                        message: 'Message sent',
-                        clear: true
-                    });
                 });
             
         });
@@ -67,6 +57,7 @@ mongo.connect('mongodb://127.0.0.1/mongochat', function(err, db){
 app.set('port', 3000);
 
 //deals with any forms that are posted
+app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: false }));
 
 var server = app.listen(app.get('port'), function() {
@@ -76,27 +67,31 @@ var server = app.listen(app.get('port'), function() {
 
 
 
-app.all('/chat', function(req,res) 
-{
-    res.sendFile(__dirname + '/public/index1.html');
 
-    
-    actualName = req.body.nameOfUser;
-    req.params.name = actualName;
-    console.log("actualName is " + actualName);
-    console.log(req.body.passOfUser);
-    
-    
-});
 
 app.all('/', function(req,res) 
 {
     res.sendFile(__dirname + '/public/index_home.html');
 });
 
+app.all('/chat/:nameOfUser?', function(req,res) 
+{
+    res.sendFile(__dirname + '/public/index1.html');
+    actualName = req.query.nameOfUser;
+    console.log("actualName is " + actualName);
+    
+    
+    
+});
+
 app.all('/css/bootstrap.min.css', function(req,res) 
 {
     res.sendFile(__dirname + '/public/css/bootstrap.min.css');
+});
+
+app.all('/images/background1.jpg', function(req,res) 
+{
+    res.sendFile(__dirname + '/public/images/background1.jpg');
 });
 
 app.all('/scripts/chat.js', function(req,res) 

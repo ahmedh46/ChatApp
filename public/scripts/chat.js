@@ -5,7 +5,7 @@
     var clearButton = document.getElementById('clear');
     var sendButton = document.getElementById('send');
     var url = window.location.href; 
-    var splitUrlName = url.split("http://localhost:3000/chat?name=")
+    var splitUrlName = url.split("http://localhost:3000/chat?nameOfUser=")
     
 
    
@@ -28,7 +28,7 @@
 
        
       
-      
+      loggedInUserSection.innerHTML = "Welcome! " + splitUrlName[1];
 
         sendButton.addEventListener('click',function(event) {
             socket.emit('input', {
@@ -38,6 +38,11 @@
             event.preventDefault();
         });
 
+        if(splitUrlName[1] == "admin9999") {
+            clearButton.style.display = "block";
+            clearButton.style.width = "50%";
+            clearButton.style.margin= "auto";
+        }
         clearButton.addEventListener('click', function(event){
             socket.emit('clear');
             outputMessages.innerHTML = "";
