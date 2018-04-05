@@ -1,10 +1,17 @@
 const mongo = require('mongodb').MongoClient;
 const client = require('socket.io').listen(4000).sockets;
+var express = require('express');
+var app = express();
+var path = require('path');
+var bodyParser = require('body-parser');
+var actualName = '';
+
+
 
 // Connect to mongo
 mongo.connect('mongodb://127.0.0.1/mongochat', function(err, db){
     if(err){
-        throw err;
+        console.log(err);
     }
 
     console.log('MongoDB connected...');
@@ -30,16 +37,11 @@ mongo.connect('mongodb://127.0.0.1/mongochat', function(err, db){
 
         // Handle input events
         socket.on('input', function(data){
-            let name = data.name;
             let message = data.message;
 
-            // Check for name and message
-            if(name == '' || message == ''){
-                // Send error status
-                sendStatus('Please enter a name and message');
-            } else {
+            
                 // Insert message
-                chat.insert({name: name, message: message}, function(){
+                chat.insert({name: actualName, message: message}, function(){
                     client.emit('output', [data]);
 
                     // Send status object
@@ -48,7 +50,7 @@ mongo.connect('mongodb://127.0.0.1/mongochat', function(err, db){
                         clear: true
                     });
                 });
-            }
+            
         });
 
         // Handle clear
@@ -61,3 +63,44 @@ mongo.connect('mongodb://127.0.0.1/mongochat', function(err, db){
         });
     });
 });
+
+app.set('port', 3000);
+
+//deals with any forms that are posted
+app.use(bodyParser.urlencoded({extended: false }));
+
+var server = app.listen(app.get('port'), function() {
+    var port = server.address().port;
+    console.log("magic happens on port 3000 " + port);
+});
+
+
+
+app.all('/chat', function(req,res) 
+{
+    res.sendFile(__dirname + '/public/index1.html');
+
+    
+    actualName = req.body.nameOfUser;
+    req.params.name = actualName;
+    console.log("actualName is " + actualName);
+    console.log(req.body.passOfUser);
+    
+    
+});
+
+app.all('/', function(req,res) 
+{
+    res.sendFile(__dirname + '/public/index_home.html');
+});
+
+app.all('/css/bootstrap.min.css', function(req,res) 
+{
+    res.sendFile(__dirname + '/public/css/bootstrap.min.css');
+});
+
+app.all('/scripts/chat.js', function(req,res) 
+{
+    res.sendFile(__dirname + '/public/scripts/chat.js');
+});
+

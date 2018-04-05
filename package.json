@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/ahmedfaisal46/ChatApp#readme",
   "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.3",
     "mongo": "^0.1.0",
     "mongodb": "^2.2.33",
     "socket.io": "^2.1.0"
