@@ -26,7 +26,9 @@
             }
          })
 
-       
+       if(splitUrlName[1] == " " || splitUrlName[1] == undefined || splitUrlName[1] == null) {
+        window.location.replace("http://localhost:3000/");
+       }
       
       loggedInUserSection.innerHTML = "Welcome! " + splitUrlName[1];
 

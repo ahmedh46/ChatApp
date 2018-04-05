@@ -94,6 +94,11 @@ app.all('/images/background1.jpg', function(req,res)
     res.sendFile(__dirname + '/public/images/background1.jpg');
 });
 
+app.all('/images/favicon.ico', function(req,res) 
+{
+    res.sendFile(__dirname + '/public/images/favicon.ico');
+});
+
 app.all('/scripts/chat.js', function(req,res) 
 {
     res.sendFile(__dirname + '/public/scripts/chat.js');
