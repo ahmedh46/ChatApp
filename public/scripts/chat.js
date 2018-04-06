@@ -30,7 +30,7 @@
         window.location.replace("http://localhost:3000/");
        }
       
-      loggedInUserSection.innerHTML = "<b>Welcome, " + splitUrlName[1] + "</b>";
+      loggedInUserSection.innerHTML = "<b>Welcome " + splitUrlName[1] + "</b>";
 
         document.onkeydown = function (e) {
         if(e.which === 13 && e.shiftKey == false){
