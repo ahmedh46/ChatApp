@@ -70,12 +70,12 @@ var server = app.listen(app.get('port'), function() {
 
 app.all('/', function(req,res) 
 {
-    res.sendFile(__dirname + '/public/index_home.html');
+    res.sendFile(__dirname + '/public/index.html');
 });
 
 app.all('/chat/:nameOfUser?', function(req,res) 
 {
-    res.sendFile(__dirname + '/public/index1.html');
+    res.sendFile(__dirname + '/public/chat.html');
     actualName = req.query.nameOfUser;
     console.log("actualName is " + actualName);
     
